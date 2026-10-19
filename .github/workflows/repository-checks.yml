@@ -121,3 +121,5 @@ jobs:
         run: |
           cmake --preset linux-debug
           cmake --build --preset linux-debug --target LibertyRecomp --parallel 2
+
+          
