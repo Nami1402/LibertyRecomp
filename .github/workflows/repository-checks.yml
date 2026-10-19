@@ -79,6 +79,12 @@ jobs:
           python tools/setup_repo.py
           python tools/setup_repo.py --check
           python tools/test_dependency_patches.py
+      - name: Parchear MSYS2 en vcpkg
+        shell: bash
+        run: |
+          cd thirdparty/vcpkg
+          git fetch origin master
+          git checkout FETCH_HEAD -- scripts/cmake/vcpkg_acquire_msys.cmake    
       - name: Configure desktop
         if: runner.os != 'macOS'
         run: cmake --preset ${{ matrix.preset }}
