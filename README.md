@@ -138,6 +138,7 @@ prerequisites, and recovery from incomplete/manual dependency downloads.
 Performance comparison of GTA IV running on macOS using different methods:
 
 | Method | Screenshot |
+
 |--------|------------|
 | **Crossover (Wine)** | ![Crossover Performance](docs/images/perf_crossover.png) |
 | **Xenia (Xbox 360 Emulator)** | ![Xenia Performance](docs/images/perf_xenia.png) |
