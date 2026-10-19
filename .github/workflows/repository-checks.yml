@@ -79,13 +79,16 @@ jobs:
           python tools/setup_repo.py
           python tools/setup_repo.py --check
           python tools/test_dependency_patches.py
-      - name: Actualizar vcpkg completo
+      - name: Parchear vcpkg y CMake 4 PythonInterp
         shell: bash
         run: |
           cd thirdparty/vcpkg
           git fetch origin master
           git checkout origin/master
-          rm -f vcpkg.exe vcpkg   
+          rm -f vcpkg.exe vcpkg
+          cd ../..
+          sed -i 's/find_package(PythonInterp 3/find_package(Python3 COMPONENTS Interpreter/g' glue/rexglue-sdk-main/thirdparty/spirv-tools/CMakeLists.txt
+          sed -i 's/PYTHON_EXECUTABLE/Python3_EXECUTABLE/g' glue/rexglue-sdk-main/thirdparty/spirv-tools/CMakeLists.txt
       - name: Configure desktop
         if: runner.os != 'macOS'
         run: cmake --preset ${{ matrix.preset }}
@@ -94,7 +97,16 @@ jobs:
         run: cmake --preset ${{ matrix.preset }} -DCMAKE_OSX_ARCHITECTURES="$(uname -m)"
       - name: Build application from checked-in generated sources
         run: cmake --build --preset ${{ matrix.preset }} --target LibertyRecomp --parallel 2
-
+      - name: Subir Ejecutable de Windows
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: LibertyRecomp-Windows
+          path: |
+            out/build/${{ matrix.preset }}/LibertyRecomp/*.exe
+            out/build/${{ matrix.preset }}/LibertyRecomp/*.dll
+            build/**/*.exe
+            
   arch:
     name: Arch Linux with distro CMake 4 and uncached vcpkg
     runs-on: ubuntu-latest
