@@ -89,6 +89,8 @@ jobs:
           cd ../..
           sed -i 's/find_package(PythonInterp 3/find_package(Python3 COMPONENTS Interpreter/g' glue/rexglue-sdk-main/thirdparty/spirv-tools/CMakeLists.txt
           sed -i 's/PYTHON_EXECUTABLE/Python3_EXECUTABLE/g' glue/rexglue-sdk-main/thirdparty/spirv-tools/CMakeLists.txt
+          sed -i 's/find_host_package(PythonInterp 3 REQUIRED)/find_package(Python3 COMPONENTS Interpreter REQUIRED)/g' glue/rexglue-sdk-main/thirdparty/glslang/CMakeLists.txt
+          sed -i 's/PYTHON_EXECUTABLE/Python3_EXECUTABLE/g' glue/rexglue-sdk-main/thirdparty/glslang/CMakeLists.txt
       - name: Configure desktop
         if: runner.os != 'macOS'
         run: cmake --preset ${{ matrix.preset }}
